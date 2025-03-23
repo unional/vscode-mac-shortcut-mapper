@@ -1,0 +1,20 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"extends": ["@repobuddy/biome/recommended"],
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"ignore": []
+	},
+	"linter":{
+		"rules":{
+			"suspicious":{
+				"noConsoleLog": "warn"
+			}
+		}
+	}
+}
