@@ -18,6 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/unional/vscode-mac-shortcut-mapper.git"
   },
+  "license": "MIT",
   "publisher": "unional",
   "main": "./out/extension.js",
   "scripts": {
