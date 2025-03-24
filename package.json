@@ -14,6 +14,11 @@
     "shortcut",
     "autohotkey"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unional/vscode-mac-shortcut-mapper.git"
+  },
+  "publisher": "unional",
   "main": "./out/extension.js",
   "scripts": {
     "compile": "tsc -p ./",

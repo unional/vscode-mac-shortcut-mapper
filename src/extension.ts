@@ -2,6 +2,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 import { getAppKey } from './app_detector'
+import { configPrefix } from './ahk++/constants'
+import { getInterpreterPath } from './ahk++/interpreter'
+import { exec, spawn } from 'node:child_process'
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -28,17 +31,46 @@ export function activate(context: vscode.ExtensionContext) {
 // This method is called when your extension is deactivated
 export function deactivate() {}
 
-function setupDefaultAHK(context: vscode.ExtensionContext) {
+async function setupDefaultAHK(context: vscode.ExtensionContext) {
 	const appKey = getAppKey(vscode.env.appName)
 	if (!appKey) {
 		console.info(`Unsupported app: ${vscode.env.appName}, exiting.`)
 		return
 	}
-	const defaultFileUrl = vscode.Uri.joinPath(context.globalStorageUri, 'autohotkey', `${appKey}.ahk`)
-	vscode.workspace.fs.stat(defaultFileUrl).then(
-		() => {},
-		() => {
-			console.info(`AutoHotKey file for ${vscode.env.appName} not found, creating one`)
-		},
-	)
+	const fileName = `${appKey}.ahk`
+	const defaultFileUrl = vscode.Uri.joinPath(context.globalStorageUri, 'autohotkey', fileName)
+
+	await vscode.workspace.fs.copy(vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName), defaultFileUrl, {
+		overwrite: true,
+	})
+
+	// await vscode.workspace.fs.stat(defaultFileUrl).then(
+	// 	() => {
+	// 		console.info(`AutoHotKey file for ${vscode.env.appName} already exists at ${defaultFileUrl.fsPath}`)
+	// 	},
+	// 	() => {
+	// 		console.info(`AutoHotKey file for ${vscode.env.appName} not found, creating one`)
+	// 		return vscode.workspace.fs.copy(
+	// 			vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName),
+	// 			defaultFileUrl,
+	// 		)
+	// 	},
+	// )
+
+	const interpreterPath = getInterpreterPath()
+	if (!interpreterPath) {
+		vscode.window.showInformationMessage('No interpreter path found in settings for AHK++. Please set it up.')
+		return
+	}
+
+	const command = `"${interpreterPath}" ${defaultFileUrl.fsPath}`
+	const cp = spawn(command, { shell: true })
+	console.info(`Spawning AHK++ with command: ${command}`)
+	if (cp.pid) {
+		cp.on('exit', (code) => {
+			console.info(`AHK++ process exited with code: ${code}`)
+		})
+	} else {
+		console.error(`Failed to spawn AHK++ with command: ${command}`)
+	}
 }

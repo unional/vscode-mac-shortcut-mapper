@@ -1,4 +1,5 @@
 ﻿#HotIf WinActive('ahk_exe Code.exe')
+#SingleInstance Force
 
 #c::^c
 #v::^v
