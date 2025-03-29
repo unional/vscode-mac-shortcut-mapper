@@ -8,11 +8,11 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": []
+		"ignore": ["default-keybindings*.jsonc"]
 	},
-	"linter":{
-		"rules":{
-			"suspicious":{
+	"linter": {
+		"rules": {
+			"suspicious": {
 				"noConsoleLog": "warn"
 			}
 		}
