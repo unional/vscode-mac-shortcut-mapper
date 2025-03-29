@@ -37,25 +37,23 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 		console.info(`Unsupported app: ${vscode.env.appName}, exiting.`)
 		return
 	}
+
 	const fileName = `${appKey}.ahk`
 	const defaultFileUrl = vscode.Uri.joinPath(context.globalStorageUri, 'autohotkey', fileName)
 
-	await vscode.workspace.fs.copy(vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName), defaultFileUrl, {
-		overwrite: true,
-	})
+	const sourceFileUrl = vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName)
 
-	// await vscode.workspace.fs.stat(defaultFileUrl).then(
-	// 	() => {
-	// 		console.info(`AutoHotKey file for ${vscode.env.appName} already exists at ${defaultFileUrl.fsPath}`)
-	// 	},
-	// 	() => {
-	// 		console.info(`AutoHotKey file for ${vscode.env.appName} not found, creating one`)
-	// 		return vscode.workspace.fs.copy(
-	// 			vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName),
-	// 			defaultFileUrl,
-	// 		)
-	// 	},
-	// )
+	const sourceFileStat = await vscode.workspace.fs.stat(sourceFileUrl)
+	const deployedFileStat = await vscode.workspace.fs.stat(defaultFileUrl).then(
+		(s) => s,
+		() => null,
+	)
+
+	if (!deployedFileStat || sourceFileStat.mtime > deployedFileStat.mtime) {
+		await vscode.workspace.fs.copy(vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName), defaultFileUrl, {
+			overwrite: true,
+		})
+	}
 
 	const interpreterPath = getInterpreterPath()
 	if (!interpreterPath) {
