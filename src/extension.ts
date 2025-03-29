@@ -59,7 +59,7 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 		return
 	}
 
-	const command = `"${interpreterPath}" ${deployedFileUrl.fsPath}`
+	const command = `"${interpreterPath}" "${deployedFileUrl.fsPath}"`
 	const cp = spawn(command, { shell: true })
 	console.info(`Spawning AHK++ with command: ${command}`)
 	if (cp.pid) {

@@ -1,4 +1,6 @@
 ﻿#HotIf WinActive('ahk_exe Code.exe')
+#HotIf WinActive('ahk_exe Code - Insiders.exe')
+
 #SingleInstance Force
 
 #c::^c
