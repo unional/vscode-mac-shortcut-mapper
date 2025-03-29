@@ -1,10 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+import { spawn } from 'node:child_process'
 import * as vscode from 'vscode'
-import { getAppKey } from './app_detector'
-import { configPrefix } from './ahk++/constants'
 import { getInterpreterPath } from './ahk++/interpreter'
-import { exec, spawn } from 'node:child_process'
+import { getAppKey } from './app_detector'
+import { getDeployedFileUrl, getSourceFileUrl } from './file'
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -38,19 +38,17 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 		return
 	}
 
-	const fileName = `${appKey}.ahk`
-	const defaultFileUrl = vscode.Uri.joinPath(context.globalStorageUri, 'autohotkey', fileName)
-
-	const sourceFileUrl = vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName)
+	const sourceFileUrl = getSourceFileUrl(context, appKey)
+	const deployedFileUrl = getDeployedFileUrl(context, appKey)
 
 	const sourceFileStat = await vscode.workspace.fs.stat(sourceFileUrl)
-	const deployedFileStat = await vscode.workspace.fs.stat(defaultFileUrl).then(
+	const deployedFileStat = await vscode.workspace.fs.stat(deployedFileUrl).then(
 		(s) => s,
 		() => null,
 	)
 
 	if (!deployedFileStat || sourceFileStat.mtime > deployedFileStat.mtime) {
-		await vscode.workspace.fs.copy(vscode.Uri.joinPath(context.extensionUri, 'default_ahk', fileName), defaultFileUrl, {
+		await vscode.workspace.fs.copy(sourceFileUrl, deployedFileUrl, {
 			overwrite: true,
 		})
 	}
@@ -61,7 +59,7 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 		return
 	}
 
-	const command = `"${interpreterPath}" ${defaultFileUrl.fsPath}`
+	const command = `"${interpreterPath}" ${deployedFileUrl.fsPath}`
 	const cp = spawn(command, { shell: true })
 	console.info(`Spawning AHK++ with command: ${command}`)
 	if (cp.pid) {
