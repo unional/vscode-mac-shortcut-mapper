@@ -1,7 +1,7 @@
 {
 	"name": "mac-shortcut-mapper",
 	"displayName": "MacOS Keyboard shortcut mapper",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Emulate MacOS keyboard shortcuts on Windows with AutoHotKey",
 	"categories": [
 		"Keymaps"
@@ -27,6 +27,8 @@
 		"cs": "changeset",
 		"pretest": "pnpm run compile && pnpm run check",
 		"test": "vscode-test",
+		"version": "changeset version",
+		"publish": "vsce publish",
 		"vscode:prepublish": "pnpm run compile",
 		"watch": "tsc -watch -p ./"
 	},

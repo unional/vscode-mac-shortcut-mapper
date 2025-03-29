@@ -1,5 +1,4 @@
-﻿#HotIf WinActive('ahk_exe Code.exe')
-#HotIf WinActive('ahk_exe Code - Insiders.exe')
+﻿#HotIf WinActive('ahk_exe Code.exe') || WinActive('ahk_exe Code - Insiders.exe')
 
 #SingleInstance Force
 
