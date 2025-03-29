@@ -46,7 +46,7 @@
 		"@changesets/cli": "^2.28.1",
 		"@repobuddy/biome": "^1.7.1",
 		"@types/mocha": "^10.0.10",
-		"@types/node": "20.x",
+		"@types/node": "22.x",
 		"@types/vscode": "^1.80.0",
 		"@vscode/test-cli": "^0.0.10",
 		"@vscode/test-electron": "^2.4.1",
