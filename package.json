@@ -60,5 +60,10 @@
   "preview": true,
   "extensionKind": [
     "ui"
-  ]
+  ],
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome"
+    ]
+  }
 }
