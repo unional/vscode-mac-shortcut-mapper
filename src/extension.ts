@@ -32,6 +32,9 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 	const sourceFileUrl = getSourceFileUrl(context, appKey)
 	const deployedFileUrl = getDeployedFileUrl(context, appKey)
 
+	console.info(`Source file: ${sourceFileUrl.fsPath}`)
+	console.info(`Deployed file: ${deployedFileUrl.fsPath}`)
+
 	const sourceFileStat = await vscode.workspace.fs.stat(sourceFileUrl)
 	const deployedFileStat = await vscode.workspace.fs.stat(deployedFileUrl).then(
 		(s) => s,
@@ -39,6 +42,7 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 	)
 
 	if (!deployedFileStat || sourceFileStat.mtime > deployedFileStat.mtime) {
+		console.info(`Copying ${sourceFileUrl.fsPath} to ${deployedFileUrl.fsPath}...`)
 		await vscode.workspace.fs.copy(sourceFileUrl, deployedFileUrl, {
 			overwrite: true,
 		})
