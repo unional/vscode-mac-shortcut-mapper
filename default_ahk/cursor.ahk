@@ -28,6 +28,8 @@
 
 #Enter::^Enter
 
+#+k::#+k
+
 #k::^k
 
 ; editor.action.addSelectionToNextFindMatch
