@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.2.1
+
+### Patch Changes
+
+- Add log channel.
+  Fix AutoHotKey path.
+
 ## 0.2.0
 
 ### Minor Changes

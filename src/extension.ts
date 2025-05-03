@@ -5,10 +5,13 @@ import * as vscode from 'vscode'
 import { getInterpreterPath } from './ahk/interpreter'
 import { getAppKey } from './app_detector'
 import { getDeployedFileUrl, getSourceFileUrl } from './file'
+import { NAME } from './constants'
+
+const logger = vscode.window.createOutputChannel('MacOS Key Mapper', { log: true })
 
 export function activate(context: vscode.ExtensionContext) {
 	if (process.platform !== 'win32') {
-		console.info('This extension is only useful on Windows. Exiting.')
+		logger.info('This extension is only useful on Windows. Exiting.')
 		return
 	}
 
@@ -25,15 +28,15 @@ export function deactivate() {}
 async function setupDefaultAHK(context: vscode.ExtensionContext) {
 	const appKey = getAppKey(vscode.env.appName)
 	if (!appKey) {
-		console.info(`Unsupported app: ${vscode.env.appName}, exiting.`)
+		logger.info(`Unsupported app: ${vscode.env.appName}, exiting.`)
 		return
 	}
 
 	const sourceFileUrl = getSourceFileUrl(context, appKey)
 	const deployedFileUrl = getDeployedFileUrl(context, appKey)
 
-	console.info(`Source file: ${sourceFileUrl.fsPath}`)
-	console.info(`Deployed file: ${deployedFileUrl.fsPath}`)
+	logger.info(`Source file: ${sourceFileUrl.fsPath}`)
+	logger.info(`Deployed file: ${deployedFileUrl.fsPath}`)
 
 	const sourceFileStat = await vscode.workspace.fs.stat(sourceFileUrl)
 	const deployedFileStat = await vscode.workspace.fs.stat(deployedFileUrl).then(
@@ -42,7 +45,7 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 	)
 
 	if (!deployedFileStat || sourceFileStat.mtime > deployedFileStat.mtime) {
-		console.info(`Copying ${sourceFileUrl.fsPath} to ${deployedFileUrl.fsPath}...`)
+		logger.info(`Copying ${sourceFileUrl.fsPath} to ${deployedFileUrl.fsPath}...`)
 		await vscode.workspace.fs.copy(sourceFileUrl, deployedFileUrl, {
 			overwrite: true,
 		})
@@ -60,19 +63,19 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 	const cp = spawn(command, { shell: true })
 	let dead = false
 	if (!cp.pid) {
-		console.error(`Failed to spawn AutoHotKey with command: ${command}`)
+		logger.error(`Failed to spawn AutoHotKey with command: ${command}`)
 		return
 	}
-	console.info(`Started AutoHotKey with command: ${command} (${cp.pid})`)
+	logger.info(`Started AutoHotKey with command: ${command} (${cp.pid})`)
 
 	cp.on('exit', (code) => {
-		console.info(`AutoHotKey process (${cp.pid}) exited with code: ${code}`)
+		logger.info(`AutoHotKey process (${cp.pid}) exited with code: ${code}`)
 		dead = true
 	})
 
 	return new vscode.Disposable(() => {
 		if (!dead && cp.pid) {
-			console.info(`Killing AutoHotKey with command: ${command} (${cp.pid})`)
+			logger.info(`Killing AutoHotKey with command: ${command} (${cp.pid})`)
 			cp.kill()
 		}
 	})

@@ -1,7 +1,7 @@
 import { workspace } from 'vscode'
-import { autohotkeyPath, configPrefix } from './constants'
+import { CONFIG_AUTO_HOT_KEY_PATH, NAME } from '../constants'
 
 export function getInterpreterPath() {
-	const config = workspace.getConfiguration(configPrefix)
-	return config.get<string>(autohotkeyPath, 'C:\\Program Files\\AutoHotkey\\AutoHotkey.exe')
+	const config = workspace.getConfiguration(NAME)
+	return config.get<string>(CONFIG_AUTO_HOT_KEY_PATH, 'C:\\Program Files\\AutoHotkey\\v2\\AutoHotkey64.exe')
 }
