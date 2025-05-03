@@ -2,30 +2,21 @@
 // Import the module and reference it with the alias vscode in your code below
 import { spawn } from 'node:child_process'
 import * as vscode from 'vscode'
-import { getInterpreterPath } from './ahk++/interpreter'
+import { getInterpreterPath } from './ahk/interpreter'
 import { getAppKey } from './app_detector'
 import { getDeployedFileUrl, getSourceFileUrl } from './file'
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	if (process.platform !== 'win32') {
-		console.info('This extension is only supported on Windows. Exiting.')
+		console.info('This extension is only useful on Windows. Exiting.')
 		return
 	}
 
-	setupDefaultAHK(context)
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('macos-key-mapper.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from MacOS Key Mapper!')
+	setupDefaultAHK(context).then((disposable) => {
+		if (disposable) {
+			context.subscriptions.push(disposable)
+		}
 	})
-
-	context.subscriptions.push(disposable)
 }
 
 // This method is called when your extension is deactivated
@@ -55,18 +46,30 @@ async function setupDefaultAHK(context: vscode.ExtensionContext) {
 
 	const interpreterPath = getInterpreterPath()
 	if (!interpreterPath) {
-		vscode.window.showInformationMessage('No interpreter path found in settings for AHK++. Please set it up.')
+		vscode.window.showInformationMessage(
+			'This extension uses AutoHotKey. Please install it or specify its path in the settings.',
+		)
 		return
 	}
 
 	const command = `"${interpreterPath}" "${deployedFileUrl.fsPath}"`
 	const cp = spawn(command, { shell: true })
-	console.info(`Spawning AHK++ with command: ${command}`)
-	if (cp.pid) {
-		cp.on('exit', (code) => {
-			console.info(`AHK++ process exited with code: ${code}`)
-		})
-	} else {
-		console.error(`Failed to spawn AHK++ with command: ${command}`)
+	let dead = false
+	if (!cp.pid) {
+		console.error(`Failed to spawn AutoHotKey with command: ${command}`)
+		return
 	}
+	console.info(`Started AutoHotKey with command: ${command} (${cp.pid})`)
+
+	cp.on('exit', (code) => {
+		console.info(`AutoHotKey process (${cp.pid}) exited with code: ${code}`)
+		dead = true
+	})
+
+	return new vscode.Disposable(() => {
+		if (!dead && cp.pid) {
+			console.info(`Killing AutoHotKey with command: ${command} (${cp.pid})`)
+			cp.kill()
+		}
+	})
 }

@@ -38,7 +38,19 @@
 				"command": "macos-key-mapper.helloWorld",
 				"title": "Hello World"
 			}
-		]
+		],
+		"configuration":			{
+				"title": "MacOS Key Mapper",
+				"type": "object",
+				"properties": {
+					"macos-key-mapper.autoHotKeyPath": {
+						"type": "string",
+						"default": "C:\\Program Files\\AutoHotkey\\AutoHotkey.exe",
+						"description": "Path to AutoHotKey executable"
+					}
+				}
+			}
+
 	},
 	"activationEvents": [
 		"onStartupFinished"
