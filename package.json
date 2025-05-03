@@ -1,7 +1,7 @@
 {
 	"name": "mac-shortcut-mapper",
 	"displayName": "MacOS Keyboard shortcut mapper",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "Emulate MacOS keyboard shortcuts on Windows with AutoHotKey",
 	"categories": [
 		"Keymaps"
@@ -39,18 +39,17 @@
 				"title": "Hello World"
 			}
 		],
-		"configuration":			{
-				"title": "MacOS Key Mapper",
-				"type": "object",
-				"properties": {
-					"macos-key-mapper.autoHotKeyPath": {
-						"type": "string",
-						"default": "C:\\Program Files\\AutoHotkey\\AutoHotkey.exe",
-						"description": "Path to AutoHotKey executable"
-					}
+		"configuration": {
+			"title": "MacOS Key Mapper",
+			"type": "object",
+			"properties": {
+				"macos-key-mapper.autoHotKeyPath": {
+					"type": "string",
+					"default": "C:\\Program Files\\AutoHotkey\\AutoHotkey.exe",
+					"description": "Path to AutoHotKey executable"
 				}
 			}
-
+		}
 	},
 	"activationEvents": [
 		"onStartupFinished"
