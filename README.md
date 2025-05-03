@@ -1,4 +1,4 @@
-# vscode-macos-key-mapper
+# [vscode-macos-key-mapper](https://marketplace.visualstudio.com/items?itemName=unional.mac-shortcut-mapper)
 
 This is a Visual Studio Code extension that allows users to mimic their MacOS keyboard shortcuts in Windows.
 
