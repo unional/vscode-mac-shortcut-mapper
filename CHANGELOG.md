@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.3.0
+
+### Minor Changes
+
+- f130a56: Add `win+b` -> `ctrl+b`
+
+### Patch Changes
+
+- 7dc5f10: Passthrough `shift+win+k`
+
 ## 0.2.1
 
 ### Patch Changes
