@@ -42,4 +42,15 @@
 
 #i::^i
 
+; Toggle primary sidebar visibility
 #b::^b
+
+; Zoom in
+#=::^=
+
+; Zoom out
+#-::^-
+
+; Toggle terminal
+#`::^`
+

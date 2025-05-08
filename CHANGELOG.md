@@ -1,5 +1,16 @@
 # Change Log
 
+## 0.4.0
+
+### Minor Changes
+
+- Add new shortcut mappings:
+
+  - Toggle primary sidebar visibility (⌘B)
+  - Zoom in (⌘=)
+  - Zoom out (⌘-)
+  - Toggle terminal (⌘`)
+
 ## 0.3.0
 
 ### Minor Changes
