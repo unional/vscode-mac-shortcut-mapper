@@ -20,6 +20,9 @@ jobs:
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
     steps:
+    - name: "Start X Virtual Frame Buffer"
+      run: "echo \"DISPLAY=:99.0\" >> $GITHUB_ENV && Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &"
+
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
