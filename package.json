@@ -28,6 +28,7 @@
 		"test": "vscode-test",
 		"package": "vsce package",
 		"publish": "vsce publish",
+		"verify": "pnpm run test",
 		"vscode:prepublish": "pnpm run compile",
 		"watch": "tsc -watch -p ./"
 	},
