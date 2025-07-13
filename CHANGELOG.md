@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.0
+
+### Minor Changes
+
+- ff5d29e: Add `[cmd+r]` cursor version of `[cmd+k]`.
+  Add `[cmd+n]`.
+
 ## 0.4.0
 
 ### Minor Changes
