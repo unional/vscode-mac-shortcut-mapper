@@ -24,10 +24,9 @@
 	"scripts": {
 		"check": "biome check",
 		"compile": "tsc -p ./",
-		"cs": "changeset",
 		"pretest": "pnpm run compile && pnpm run check",
 		"test": "vscode-test",
-		"version": "changeset version",
+		"package": "vsce package",
 		"publish": "vsce publish",
 		"vscode:prepublish": "pnpm run compile",
 		"watch": "tsc -watch -p ./"
@@ -56,16 +55,19 @@
 	],
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@changesets/cli": "^2.28.1",
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^11.0.3",
 		"@repobuddy/biome": "^1.7.1",
 		"@types/mocha": "^10.0.10",
+		"semantic-release-vsce": "^6.0.10",
 		"@types/node": "20.x",
 		"@types/vscode": "^1.80.0",
 		"@vscode/test-cli": "^0.0.10",
 		"@vscode/test-electron": "^2.4.1",
 		"typescript": "^5.7.3"
 	},
-	"packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39",
+	"packageManager": "pnpm@10.13.1",
 	"engines": {
 		"vscode": "^1.80.0"
 	},

@@ -1,0 +1,16 @@
+name: pull-request
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  code:
+    uses: unional/.github/.github/workflows/pnpm-verify.yml@main
+    with:
+      os: '["ubuntu-latest"]'
+      node-version: '[24]'

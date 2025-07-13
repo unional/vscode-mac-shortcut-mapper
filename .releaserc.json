@@ -1,0 +1,38 @@
+{
+	"branches": [
+		"main",
+		"next",
+		"beta"
+	],
+	"plugins": [
+		"@semantic-release/commit-analyzer",
+		"@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+		[
+			"semantic-release-vsce"
+		],
+		[
+			"@semantic-release/github",
+			{
+				"assets": [
+					{
+						"path": "*.vsix"
+					}
+				]
+			}
+		],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md"
+        ]
+      }
+    ]
+	]
+}
