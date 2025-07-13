@@ -55,17 +55,17 @@
 		"onStartupFinished"
 	],
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.1.1",
+		"@repobuddy/biome": "^2.0.1",
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"@semantic-release/github": "^11.0.3",
-		"@repobuddy/biome": "^1.7.1",
 		"@types/mocha": "^10.0.10",
-		"semantic-release-vsce": "^6.0.10",
 		"@types/node": "20.x",
 		"@types/vscode": "^1.80.0",
 		"@vscode/test-cli": "^0.0.10",
 		"@vscode/test-electron": "^2.4.1",
+		"semantic-release-vsce": "^6.0.10",
 		"typescript": "^5.7.3"
 	},
 	"packageManager": "pnpm@10.13.1",
@@ -78,7 +78,11 @@
 	],
 	"pnpm": {
 		"onlyBuiltDependencies": [
-			"@biomejs/biome"
+			"@biomejs/biome",
+			"@vscode/vsce-sign"
+		],
+		"ignoredBuiltDependencies": [
+			"keytar"
 		]
 	}
 }

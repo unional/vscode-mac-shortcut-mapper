@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
 	"extends": ["@repobuddy/biome/recommended"],
 	"vcs": {
 		"enabled": true,
@@ -8,13 +8,23 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["default-keybindings*.jsonc"]
+		"includes": ["**", "!**/default-keybindings*.jsonc"]
 	},
 	"linter": {
 		"rules": {
 			"suspicious": {
-				"noConsoleLog": "warn"
+				"noConsole": { "level": "warn", "options": { "allow": ["log"] } }
 			}
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["cursor-configs/**/*.json"],
+			"json": {
+				"parser": {
+					"allowComments": true
+				}
+			}
+		}
+	]
 }

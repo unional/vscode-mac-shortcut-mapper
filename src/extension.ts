@@ -5,7 +5,6 @@ import * as vscode from 'vscode'
 import { getInterpreterPath } from './ahk/interpreter'
 import { getAppKey } from './app_detector'
 import { getDeployedFileUrl, getSourceFileUrl } from './file'
-import { NAME } from './constants'
 
 const logger = vscode.window.createOutputChannel('MacOS Key Mapper', { log: true })
 
