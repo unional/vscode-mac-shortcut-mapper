@@ -54,3 +54,8 @@
 ; Toggle terminal
 #`::^`
 
+; Cursor version of ctrl+k
+#r::^m
+
+; New file, new Chat
+#n::^n
